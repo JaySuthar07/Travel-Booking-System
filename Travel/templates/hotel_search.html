@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Search Hotels{% endblock %}
+
+{% block body %}    
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Search for Hotels</h2>
+
+    <form method="POST" action="{{ url_for('travel.search_hotel') }}" class="needs-validation" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.destination.label(class="form-label") }}
+                    {{ form.destination(class="form-control", placeholder="Destination", required=True) }}
+                    <div class="invalid-feedback">Please enter a destination.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.check_in.label(class="form-label") }}
+                    {{ form.check_in(class="form-control", type="date", placeholder="Check-In Date (YYYY-MM-DD)") }}
+                    <div class="invalid-feedback">Please select a check-in date.</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.check_out.label(class="form-label") }}
+                    {{ form.check_out(class="form-control", type="date", placeholder="Check-Out Date (YYYY-MM-DD)") }}
+                    <div class="invalid-feedback">Please select a check-out date.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-success btn-block">Search Hotels</button>
+            </div>
+            <div class="text-center mb-3">
+                <a href="{{ url_for('travel.user_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+            </div>
+        </div>
+    </form>
+
+    {% if hotels %}
+    <h3 class="mt-4 text-center">Available Hotels</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="thead-light">
+                <tr>
+                    <th>Hotel Name</th>
+                    <th>Destination</th>
+                    <th>Check-In</th>
+                    <th>Check-Out</th>
+                    <th>Price</th>
+                    <th>Availability</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hotel in hotels %}
+                <tr>
+                    <td>{{ hotel.Hotel_Name }}</td>
+                    <td>{{ hotel.Destination }}</td>
+                    <td>{{ hotel.Check_In.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ hotel.Check_Out.strftime('%Y-%m-%d') if hotel.Check_Out else 'N/A' }}</td>
+                    <td>${{ hotel.price }}</td>
+                    <td>{{ hotel.availability_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-warning mt-3" role="alert">
+        No hotels available for the selected criteria.
+    </div>
+    {% endif %}
+</div>
+
+<script>
+
+    (function () {
+        'use strict';
+
+        var forms = document.querySelectorAll('.needs-validation');
+        Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener('submit', function (event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+
+            var inputs = form.querySelectorAll('input');
+            inputs.forEach(function (input) {
+                input.addEventListener('input', function () {
+                    if (input.checkValidity()) {
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+                    } else {
+                        input.classList.remove('is-valid');
+                        input.classList.add('is-invalid');
+                    }
+                });
+            });
+        });
+    })();
+</script>
+
+{% endblock %}

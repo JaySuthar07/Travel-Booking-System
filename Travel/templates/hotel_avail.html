@@ -1,0 +1,49 @@
+{% extends "base1.html" %}
+{% block abc %}
+<center>
+    <h2>Available Hotels</h2>
+    <div class="table-container">
+        {% if hotels %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Hotel Name</th>
+                    <th>Destination</th>
+                    <th>Check-In</th>
+                    <th>Check-Out</th>
+                    <th>Availability</th>
+                    <th>Price ($)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hotel in hotels %}
+                <tr>
+                    <td>{{ hotel.Hotel_Name }}</td>
+                    <td>{{ hotel.Destination }}</td>
+                    <td>{{ hotel.Check_In.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ hotel.Check_Out.strftime('%Y-%m-%d') }}</td>
+
+                    <td>{{ hotel.availability_count }}</td>
+                    <td>{{ hotel.price }}</td>
+                    <td class="action-buttons">
+                        <form action="{{ url_for('travel.edit_hotel', id=hotel.id) }}" method="POST"
+                            style="display:inline;">
+                            <button type="submit" class="btn btn-warning">Edit</button>
+                        </form>
+                        <form action="{{ url_for('travel.delete_hotel', id=hotel.id) }}" method="POST"
+                            style="display:inline;">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No hotels found for the selected destination.</p>
+        {% endif %}
+    </div>
+    <button class="back-button" onclick="window.location.href='/admin/dashboard'">Back</button>
+</center>
+{% endblock %}

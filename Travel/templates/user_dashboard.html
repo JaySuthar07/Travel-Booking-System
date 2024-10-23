@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="text-center">User Dashboard</h1>
+
+    {% if session['user_logged_in'] %}
+    <h2 class="text-center">Welcome, {{ username }}!</h2>
+    {% else %}
+    <h2 class="text-center">Welcome, Guest!</h2>
+    {% endif %}
+
+    <div class="mt-4">
+        <h3 class="text-center">Quick Links</h3>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card mb-4 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-plane-departure fa-3x mb-3"></i>
+                        <h5 class="card-title">Search Flights</h5>
+                        <p class="card-text">Find the best flights for your next trip.</p>
+                        <a href="{{ url_for('travel.search_flight') }}" class="btn btn-primary">Go to Search</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-hotel fa-3x mb-3"></i>
+                        <h5 class="card-title">Search Hotels</h5>
+                        <p class="card-text">Discover great hotels at your destination.</p>
+                        <a href="{{ url_for('travel.search_hotel') }}" class="btn btn-primary">Go to Search</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-box fa-3x mb-3"></i>
+                        <h5 class="card-title">Book Package</h5>
+                        <p class="card-text">Explore and book travel packages.</p>
+                        <a href="{{ url_for('travel.book_package') }}" class="btn btn-primary">Go to Book</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-book fa-3x mb-3"></i>
+                        <h5 class="card-title">My Bookings</h5>
+                        <p class="card-text">View your flight and hotel bookings.</p>
+                        <a href="{{ url_for('travel.user_bookings') }}" class="btn btn-primary mb-2">My Bookings</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <a href="{{ url_for('travel.logout') }}" class="btn btn-danger">Logout</a>
+    </div>
+</div>
+{% endblock %}

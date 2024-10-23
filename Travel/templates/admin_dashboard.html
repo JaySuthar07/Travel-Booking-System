@@ -1,0 +1,128 @@
+{% extends 'base1.html' %}
+
+{% block abc %}
+<div class="container mt-5 admin-dashboard">
+  <div class="container mt-5">
+    <h1 class="text-center">Admin Dashboard</h1>
+    <h2 class="text-center text-muted mb-4">Welcome Admin</h2>
+
+    <div class="row mb-5">
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="card-title">Add Flight</h5>
+            <p class="card-text">Add new flight details .</p>
+            <a href="{{ url_for('travel.add_flight') }}" class="btn btn-primary w-100">Add Flight</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="card-title">Add Hotel</h5>
+            <p class="card-text">Add hotel information for user bookings.</p>
+            <a href="{{ url_for('travel.add_hotel') }}" class="btn btn-primary w-100">Add Hotel</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="card-title">Add Package</h5>
+            <p class="card-text">Create attractive package deals for users.</p>
+            <a href="{{ url_for('travel.add_package_deal') }}" class="btn btn-primary w-100">Add Package</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="card-title">Show Flights</h5>
+            <p class="card-text">View and manage existing flights.</p>
+            <a href="{{ url_for('travel.flights') }}" class="btn btn-info w-100">Show Flights</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="card-title">Show Hotels</h5>
+            <p class="card-text">Manage and review hotel listings.</p>
+            <a href="{{ url_for('travel.hotels') }}" class="btn btn-info w-100">Show Hotels</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="card-title">Show Packages</h5>
+            <p class="card-text">Check all available package deals.</p>
+            <a href="{{ url_for('travel.show_package') }}" class="btn btn-info w-100">Show Packages</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <h5 class="card-title">User Reservations</h5>
+          <p class="card-text">View and manage user reservations.</p>
+          <a href="{{ url_for('travel.user_reservations') }}" class="btn btn-warning w-100">View Reservations</a>
+        </div>
+      </div>
+    </div>
+    
+
+    <h2 class="text-center">User Statistics</h2>
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="card shadow-sm text-center">
+          <div class="card-body">
+            <h5 class="card-title">Total Users</h5>
+            <p class="card-text display-4">{{ total_users }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card shadow-sm text-center">
+          <div class="card-body">
+            <h5 class="card-title">Total Bookings</h5>
+            <p class="card-text display-4">{{ total_bookings }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="text-center mt-4">Registered Users:</h3>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="2" class="text-center">No registered users found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="{{ url_for('travel.logout') }}" class="btn btn-danger w-50">Logout</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

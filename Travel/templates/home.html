@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="text-center">Welcome to the Travel Booking System</h2>
+
+    <div class="row">
+   
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Search Flights</h5>
+                    <p class="card-text">Find flights that match your travel dates and destination.</p>
+                    <form method="POST" action="{{ url_for('travel.search_flight') }}">
+                        <button type="submit" class="btn btn-success w-100">Search Flights</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Search Hotels</h5>
+                    <p class="card-text">Find hotels based on your travel destination and dates.</p>
+                    <form method="POST" action="{{ url_for('travel.search_hotel') }}">
+                        <button type="submit" class="btn btn-success w-100">Search Hotels</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Search Package Deals</h5>
+                    <p class="card-text">Explore package deals that combine flights and hotels.</p>
+                    <form method="POST" action="{{ url_for('travel.search_package_deals') }}">
+                        <button type="submit" class="btn btn-success w-100">Search Packages</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

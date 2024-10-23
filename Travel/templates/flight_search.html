@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Search Flights{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Search for Flights</h2>
+
+    <form method="POST" action="{{ url_for('travel.search_flight') }}" class="needs-validation" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.from_location.label("From Location") }} 
+                    {{ form.from_location(class="form-control", required=True) }}
+                    <div class="invalid-feedback">Please enter a departure location.</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.to_location.label("To Location") }}
+                    {{ form.to_location(class="form-control", required=True) }}
+                    <div class="invalid-feedback">Please enter a destination location.</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-success btn-block">Search Flights</button>
+            </div>
+            <div class="text-center mb-3">
+                <a href="{{ url_for('travel.user_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+            </div>
+        </div>
+    </form>
+
+    {% if flights %}
+    <h3 class="mt-4 text-center">Available Flights</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="thead-light">
+                <tr>
+                    <th>Flight Name</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Departure</th>
+                    <th>Return</th>
+                    <th>Price</th>
+                    <th>Availability</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flight in flights %}
+                <tr>
+                    <td>{{ flight.Flight_Name }}</td>
+                    <td>{{ flight.From }}</td>
+                    <td>{{ flight.To }}</td>
+                    <td>{{ flight.Departure.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>{{ flight.Return.strftime('%Y-%m-%d %H:%M') if flight.Return else 'N/A' }}</td>
+                    <td>${{ flight.price }}</td>
+                    <td>{{ flight.availability_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-warning mt-3" role="alert">
+        No flights available for the selected criteria.
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    (function () {
+        'use strict';
+
+        
+        var forms = document.querySelectorAll('.needs-validation');
+        Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener('submit', function (event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+
+           
+            var inputs = form.querySelectorAll('input');
+            inputs.forEach(function (input) {
+                input.addEventListener('input', function () {
+                    if (input.checkValidity()) {
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+                    } else {
+                        input.classList.remove('is-valid');
+                        input.classList.add('is-invalid');
+                    }
+                });
+            });
+        });
+    })();
+</script>
+
+{% endblock %}

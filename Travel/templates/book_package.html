@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Book Package{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="text-center">Book a Package</h1>
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label for="package_id">Select Package:</label>
+            <select name="package_id" class="form-control" required>
+                <option value="">Choose a package</option>
+                {% for package in packages %}
+                <option value="{{ package.package_id }}">
+                    {{ package.flight.Flight_Name }} + {{ package.hotel.Hotel_Name }} - ${{ package.total_price }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="text-center">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('travel.user_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

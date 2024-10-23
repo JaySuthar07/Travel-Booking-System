@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1 class="text-center">Book Hotel</h1>
+  <center>
+    <div class="card mt-4" style="width: 50%;">
+      <div class="card-body">
+        <form action="{{ url_for('travel.book_hotel', hotel_id=hotel.id) }}" method="POST">
+            {{ form.hidden_tag() }}
+
+
+          <div class="mb-3">
+            <label for="h_name" class="form-label">Hotel Name</label>
+            {{ form.Hotel_Name(class="form-control", readonly=True) }}
+          </div>
+
+          <div class="mb-3">
+            <label for="destination" class="form-label">Destination</label>
+            {{ form.Destination(class="form-control", readonly=True) }}
+          </div>
+
+          <div class="mb-3">
+            <label for="check_in" class="form-label">Check-In Date</label>
+            {{ form.Check_In(class="form-control") }}
+          </div>
+
+          <div class="mb-3">
+            <label for="check_out" class="form-label">Check-Out Date</label>
+            {{ form.Check_Out(class="form-control") }}
+          </div>
+
+          <div class="mb-3">
+            <label for="price" class="form-label">Price $ (per night)</label>
+            {{ form.price(class="form-control", readonly=True) }}
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-success">Book Now</button>
+            <button type="button" class="btn btn-secondary" onclick="window.location.href='/search/hotel'">Back</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </center>
+{% endblock %}

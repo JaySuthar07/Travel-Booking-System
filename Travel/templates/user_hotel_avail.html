@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Available Hotels{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Available Hotels</h2>
+    <div class="table-responsive">
+        {% if hotels %}
+        <table class="table table-bordered table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th>Hotel Name</th>
+                    <th>Destination</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Available For Person</th>
+                    <th>Price ($)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hotel in hotels %}
+                <tr>
+                    <td>{{ hotel.Hotel_Name }}</td>
+                    <td>{{ hotel.Destination }}</td>
+                    <td>{{ hotel.Check_In.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ hotel.Check_Out.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ hotel.availability_count }}</td>
+                    <td>${{ hotel.price }}</td>
+                    <td>
+                        <a href="{{ url_for('travel.book_hotel', hotel_id=hotel.id) }}" class="btn btn-primary btn-sm">Book</a>
+                        <a href="#" class="btn btn-danger btn-sm">Cancel</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-warning" role="alert">
+            No hotels found for the selected criteria.
+        </div>
+        {% endif %}
+    </div>
+    <div class="text-center mt-4">
+        <button class="btn btn-secondary" onclick="window.location.href='/user/dashboard'">Back to Dashboard</button>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{% if has_bookings %}
+<!-- Flight Bookings -->
+{% if flight_bookings %}
+<h3 class="mt-4">Flight Bookings</h3>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped mt-3">
+        <thead class="thead-light">
+            <tr>
+                <th>Flight Name</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Departure</th>
+                <th>Return</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for flight in flight_bookings %}
+                {% if flight.flight and flight.flight.Flight_Name %}
+                <tr>
+                    <td>{{ flight.flight.Flight_Name }}</td>
+                    <td>{{ flight.flight.From }}</td>
+                    <td>{{ flight.flight.To }}</td>
+                    <td>{{ flight.flight.Departure.strftime('%Y-%m-%d') if flight.flight.Departure else ' - ' }}</td>
+                    <td>{{ flight.flight.Return.strftime('%Y-%m-%d') if flight.flight.Return else ' - ' }}</td>
+                    <td>${{ flight.flight.price }}</td>
+                    <td>{{ flight.status }}</td>
+                    <td>
+                        <form action="{{ url_for('travel.cancel_booking', booking_id=flight.id) }}" method="POST" style="display:inline;">
+                            <input type="hidden" name="_method" value="POST">
+                            <button type="submit" class="btn btn-sm {% if flight.status == 'Cancelled' %}btn-secondary{% else %}btn-danger{% endif %}" 
+                                    {% if flight.status == 'Cancelled' %}disabled{% endif %}
+                                    onclick="return confirm('Are you sure you want to cancel this booking?');">
+                                Cancel
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<!-- Hotel Bookings -->
+{% if hotel_bookings %}
+<h3 class="mt-4">Hotel Bookings</h3>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped mt-3">
+        <thead class="thead-light">
+            <tr>
+                <th>Hotel Name</th>
+                <th>Destination</th>
+                <th>Check-In</th>
+                <th>Check-Out</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hotel in hotel_bookings %}
+                {% if hotel.hotel and hotel.hotel.Hotel_Name %}
+                <tr>
+                    <td>{{ hotel.hotel.Hotel_Name }}</td>
+                    <td>{{ hotel.hotel.Destination }}</td>
+                    <td>{{ hotel.hotel.Check_In.strftime('%Y-%m-%d') if hotel.hotel.Check_In else ' - ' }}</td>
+                    <td>{{ hotel.hotel.Check_Out.strftime('%Y-%m-%d') if hotel.hotel.Check_Out else ' - ' }}</td>
+                    <td>${{ hotel.hotel.price }}</td>
+                    <td>{{ hotel.status }}</td>
+                    <td>
+                        <form action="{{ url_for('travel.cancel_booking', booking_id=hotel.id) }}" method="POST" style="display:inline;">
+                            <input type="hidden" name="_method" value="POST">
+                            <button type="submit" class="btn btn-sm {% if hotel.status == 'Cancelled' %}btn-secondary{% else %}btn-danger{% endif %}" 
+                                    {% if hotel.status == 'Cancelled' %}disabled{% endif %}
+                                    onclick="return confirm('Are you sure you want to cancel this booking?');">
+                                Cancel
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<!-- Package Deal Bookings -->
+{% if package_bookings %}
+<h3 class="mt-4">Package Deal Bookings</h3>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped mt-3">
+        <thead class="thead-light">
+            <tr>
+                <th>Flight Name</th>
+                <th>Hotel Name</th>
+                <th>Destination</th>
+                <th>Departure</th>
+                <th>Check-In</th>
+                <th>Check-Out</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in package_bookings %}
+                {% if booking.package and booking.package.flight and booking.package.hotel %}
+                <tr>
+                    <td>{{ booking.package.flight.Flight_Name }}</td>
+                    <td>{{ booking.package.hotel.Hotel_Name }}</td>
+                    <td>{{ booking.package.hotel.Destination }}</td>
+                    <td>{{ booking.package.flight.Departure.strftime('%Y-%m-%d') if booking.package.flight.Departure else ' - ' }}</td>
+                    <td>{{ booking.package.hotel.Check_In.strftime('%Y-%m-%d') if booking.package.hotel.Check_In else ' - ' }}</td>
+                    <td>{{ booking.package.hotel.Check_Out.strftime('%Y-%m-%d') if booking.package.hotel.Check_Out else ' - ' }}</td>
+                    <td>${{ booking.package.total_price }}</td>
+                    <td>{{ booking.status }}</td>
+                    <td>
+                        <form action="{{ url_for('travel.cancel_booking', booking_id=booking.id) }}" method="POST" style="display:inline;">
+                            <input type="hidden" name="_method" value="POST">
+                            <button type="submit" class="btn btn-sm {% if booking.status == 'Cancelled' %}btn-secondary{% else %}btn-danger{% endif %}" 
+                                    {% if booking.status == 'Cancelled' %}disabled{% endif %}
+                                    onclick="return confirm('Are you sure you want to cancel this booking?');">
+                                Cancel
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+{% else %}
+<p>No bookings found.</p>
+{% endif %}
+
+{% endblock %}

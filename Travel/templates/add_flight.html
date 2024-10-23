@@ -1,0 +1,117 @@
+{% extends 'base1.html' %}
+
+{% block abc %}
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .form-title {
+        text-align: center;
+        color: #343a40;
+        margin-bottom: 20px;
+    }
+    .form-control {
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+    }
+    .form-control:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    }
+    .btn-custom {
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    .btn-custom:hover {
+        background-color: #0056b3;
+    }
+    .error-message {
+        color: red;
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+</style>
+
+<div class="form-container">
+    <h2 class="form-title">{% if flight %}Edit Flight{% else %}Add a New Flight{% endif %}</h2>
+    <form method="POST" action="{{ url_for('travel.add_flight', id=flight.id if flight else None) }}">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            {{ form.service_id.label(class="form-label") }}
+            {{ form.service_id(class="form-control", size=32) }}
+            {% for error in form.service_id.errors %}
+            <div class="error-message">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.Flight_Name.label(class="form-label") }}
+            {{ form.Flight_Name(class="form-control", size=32) }}
+            {% for error in form.Flight_Name.errors %}
+            <div class="error-message">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.From.label(class="form-label") }}
+            {{ form.From(class="form-control", size=32) }}
+            {% for error in form.From.errors %}
+            <div class="error-message">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.To.label(class="form-label") }}
+            {{ form.To(class="form-control", size=32) }}
+            {% for error in form.To.errors %}
+            <div class="error-message">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.Departure.label(class="form-label") }}
+            {{ form.Departure(class="form-control", size=32) }}
+            {% for error in form.Departure.errors %}
+            <div class="error-message">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.Return.label(class="form-label") }}
+            {{ form.Return(class="form-control", size=32) }}
+            {% for error in form.Return.errors %}
+            <div class="error-message">{{ error }}</div>
+            {% endfor %}
+        </div>
+        
+
+        <div class="mb-3">
+            {{ form.availability_count.label(class="form-label") }}
+            {{ form.availability_count(class="form-control", size=32) }}
+            {% for error in form.availability_count.errors %}
+            <div class="error-message">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.price.label(class="form-label") }}
+            {{ form.price(class="form-control") }}
+            {% for error in form.price.errors %}
+            <div class="error-message">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ form.submit(label='Update Flight' if flight else 'Add Flight', class='btn btn-custom w-100') }}
+        </div>
+    </form>
+</div>
+{% endblock %}

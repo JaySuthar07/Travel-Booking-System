@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Available Flights{% endblock %}
+
+{% block body %}
+  <h2 class="text-center my-4">Available Flights</h2>
+
+  <div class="container">
+    {% if flights %}
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th>Flight Name</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Departure</th>
+              <th>Available Seats</th>
+              <th>Price ($)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for flight in flights %}
+            <tr>
+              <td>{{ flight.Flight_Name }}</td>
+              <td>{{ flight.From }}</td>
+              <td>{{ flight.To }}</td>
+              <td>{{ flight.Departure.strftime('%Y-%m-%d') }}</td>
+              <td>{{ flight.availability_count }}</td>
+              <td>${{ flight.price }}</td>
+              <td>
+                <a href="{{ url_for('travel.book_flight', flight_id=flight.id) }}" class="btn btn-success btn-sm">Book Now</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="alert alert-warning text-center" role="alert">
+        No flights found for the selected criteria.
+      </div>
+    {% endif %}
+
+    <div class="text-center mt-4">
+      <button class="btn btn-secondary" onclick="window.location.href='/user/dashboard'">Back to Dashboard</button>
+    </div>
+  </div>
+{% endblock %}

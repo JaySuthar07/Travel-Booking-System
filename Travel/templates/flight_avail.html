@@ -1,0 +1,54 @@
+{% extends "base1.html" %}
+{% block abc %}
+<center>
+    <h2>Available Flights</h2>
+
+    <div class="table-container">
+        {% if flights %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Flight Name</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Departure</th>
+                        <th>Return</th>
+                        <th>Availability</th>
+                        <th>Price ($)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for flight in flights %}
+                        <tr>
+                            <td>{{ flight.id }}</td>
+                            <td>{{ flight.Flight_Name }}</td>
+                            <td>{{ flight.From }}</td>
+                            <td>{{ flight.To }}</td>
+                            <td>{{ flight.Departure }}</td>
+                            <td>{{ flight.Return }}</td>
+                            <td>{{ flight.availability_count }}</td>
+                            <td>{{ flight.price }}</td>
+                            <td class="action-buttons">
+                                <form action="{{ url_for('travel.edit_flight', id=flight.id) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-warning">Edit</button>
+                                </form>
+                                <form action="{{ url_for('travel.delete_flight', id=flight.id) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                                
+                                
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No flights found for the selected route.</p>
+        {% endif %}
+    </div>
+
+    <button class="back-button" onclick="window.location.href='/admin/dashboard'">Back</button>
+</center>
+{% endblock %}

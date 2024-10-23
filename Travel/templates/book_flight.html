@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1 class="text-center">Book Flight</h1>
+  <center>
+    <div class="card mt-4" style="width: 50%;">
+      <div class="card-body">
+        <form action="{{ url_for('travel.book_flight', flight_id=flight.id) }}" method="POST">
+          {{ form.hidden_tag() }}
+
+          <div class="mb-3">
+            <label for="f_id" class="form-label">Flight ID</label>
+            <input type="text" class="form-control" name="id" value="{{ flight.id }}" readonly />
+          </div>
+
+          <div class="mb-3">
+            <label for="f_name" class="form-label">Flight Name</label>
+            {{ form.Flight_Name(class="form-control", readonly=True) }}
+          </div>
+
+          <div class="mb-3">
+            <label for="f_from" class="form-label">From</label>
+            {{ form.From(class="form-control", readonly=True) }}
+          </div>
+
+          <div class="mb-3">
+            <label for="f_to" class="form-label">To</label>
+            {{ form.To(class="form-control", readonly=True) }}
+          </div>
+
+          <div class="mb-3">
+            <label for="f_dep" class="form-label">Departure Date</label>
+            {{ form.Departure(class="form-control") }}
+          </div>
+
+          <div class="mb-3">
+            <label for="f_ret" class="form-label">Return Date (Optional)</label>
+            {{ form.Return(class="form-control") }}
+          </div>
+
+          <div class="mb-3">
+            <label for="f_price" class="form-label">Price $ (per person)</label>
+            {{ form.price(class="form-control", readonly=True) }}
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-success">Book Now</button>
+            <button type="button" class="btn btn-secondary" onclick="window.location.href='/search/flight'">Back</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </center>
+{% endblock %}

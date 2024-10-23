@@ -1,0 +1,96 @@
+{% extends 'base1.html' %}
+
+{% block abc %}
+<h1>Edit Hotel</h1>
+<form method="POST" action="{{ url_for('travel.edit_hotel', id=hotel.id) }}">
+    {{ form.hidden_tag() }}
+
+    <!-- <div>
+        {{ form.service_id.label }}<br>
+        {{ form.service_id(size=32, value=hotel.service_id) }}<br>
+        {% if form.service_id.errors %}
+        <ul class="errors">
+            {% for error in form.service_id.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div> -->
+
+    <div>
+        {{ form.Destination.label }}<br>
+        {{ form.Destination(size=32, value=hotel.Destination) }}<br>
+        {% if form.Destination.errors %}
+        <ul class="errors">
+            {% for error in form.Destination.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div>
+        {{ form.Hotel_Name.label }}<br>
+        {{ form.Hotel_Name(size=32, value=hotel.Hotel_Name) }}<br>
+        {% if form.Hotel_Name.errors %}
+        <ul class="errors">
+            {% for error in form.Hotel_Name.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div>
+        {{ form.Check_In.label }}<br>
+        {{ form.Check_In(size=32, value=hotel.Check_In.strftime('%Y-%m-%d')) }}<br>
+        {% if form.Check_In.errors %}
+        <ul class="errors">
+            {% for error in form.Check_In.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div>
+        {{ form.Check_Out.label }}<br>
+        {{ form.Check_Out(size=32, value=hotel.Check_Out.strftime('%Y-%m-%d')) }}<br>
+        {% if form.Check_Out.errors %}
+        <ul class="errors">
+            {% for error in form.Check_Out.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div>
+        {{ form.availability_count.label }}<br>
+        {{ form.availability_count(size=32, value=hotel.availability_count) }}<br>
+        {% if form.availability_count.errors %}
+        <ul class="errors">
+            {% for error in form.availability_count.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div>
+        {{ form.price.label }}<br>
+        {{ form.price(value=hotel.price) }}<br>
+        {% if form.price.errors %}
+        <ul class="errors">
+            {% for error in form.price.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Update Hotel</button>
+    </div>
+</form>
+{% endblock %}

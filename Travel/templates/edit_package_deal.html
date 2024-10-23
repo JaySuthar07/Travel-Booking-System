@@ -1,0 +1,40 @@
+{% extends "base1.html" %}
+
+{% block abc %}
+<div class="container">
+  <h1>Edit Package Deal</h1>
+  <form method="POST" action="{{ url_for('travel.edit_package_deal', package_id=package_deal.package_id) }}">
+    {{ form.hidden_tag() }} 
+    
+    <div class="form-group">
+      <label for="flight_id">Select Flight:</label>
+      <select id="flight_id" name="flight_id" class="form-control" required>
+        <option value="">-- Select a Flight --</option>
+        {% for flight in flights %}
+        <option value="{{ flight.id }}" {% if flight.id == package_deal.flight_id %}selected{% endif %}>
+          {{ flight.Flight_Name }} - From: {{ flight.From }} To: {{ flight.To }} - Price: ${{ flight.price }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="hotel_id">Select Hotel:</label>
+      <select id="hotel_id" name="hotel_id" class="form-control" required>
+        <option value="">-- Select a Hotel --</option>
+        {% for hotel in hotels %}
+        <option value="{{ hotel.id }}" {% if hotel.id == package_deal.hotel_id %}selected{% endif %}>
+          {{ hotel.Hotel_Name }} - Destination: {{ hotel.Destination }} - Price: ${{ hotel.price }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Update Package</button>
+  </form>
+
+  <div class="footer">
+    <a href="{{ url_for('travel.admin_dashboard') }}">Back to Dashboard</a>
+  </div>
+</div>
+{% endblock %}

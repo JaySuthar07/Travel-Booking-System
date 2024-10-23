@@ -1,0 +1,58 @@
+{% extends "base1.html" %}
+
+{% block abc %}
+<div class="package-container">
+    <h1>Package Deals</h1>
+    <div class="table-container">
+        {% if package_prices %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Package ID</th>
+                        <th>Flight Name</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Departure</th>
+                        <th>Return</th>
+                        <th>Flight Price ($)</th>
+                        <th>Hotel Name</th>
+                        <th>Destination</th>
+                        <th>Hotel Price ($/night)</th>
+                        <th>Total Package Price ($)</th>
+                        <th>Actions</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p, price in package_prices %}
+                    <tr>
+                        <td>{{ p.package_id }}</td>
+                        <td>{{ p.flight.Flight_Name }}</td>
+                        <td>{{ p.flight.From }}</td>
+                        <td>{{ p.flight.To }}</td>
+                        <td>{{ p.flight.Departure }}</td>
+                        <td>{{ p.flight.Return }}</td>
+                        <td>{{ p.flight.price }}</td>
+                        <td>{{ p.hotel.Hotel_Name }}</td>
+                        <td>{{ p.hotel.Destination }}</td>
+                        <td>{{ p.hotel.price }}</td>
+                        <td>{{ p.total_price }}</td>
+                        <td class="action-buttons">
+                            <a href="{{ url_for('travel.edit_package_deal', package_id=p.package_id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        </td>
+                        <td>
+                            <form method="POST" action="{{ url_for('travel.delete_package', package_id=p.package_id) }}" onsubmit="return confirm('Are you sure you want to delete this package deal?');">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No packages found.</p>
+        {% endif %}
+    </div>
+</div>
+<button class="back-button" onclick="window.location.href='/admin/dashboard'">Back</button>
+{% endblock %}
